@@ -3,7 +3,7 @@
  * @author kharileigh
  */
 
-package com.kharileigh.persistence;
+package com.kharileigh.model.persistence;
 
 import com.kharileigh.entity.Customer;
 import java.util.List;
