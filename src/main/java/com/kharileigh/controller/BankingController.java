@@ -27,7 +27,7 @@ public class BankingController {
     @RequestMapping("/")
     public ModelAndView loginPageController() {
     
-        return new ModelAndView("Login");
+        return new ModelAndView("index");
     }
     
     @RequestMapping("/login")
@@ -35,7 +35,7 @@ public class BankingController {
     
         ModelAndView modelAndView = new ModelAndView();
         
-        if(service.login(customer.getName(), customer.getPassword())) {
+        if(service.login(customer.getCustomerId(), customer.getPassword())) {
         
             modelAndView.addObject("customer", customer);
             session.setAttribute("customer", customer);

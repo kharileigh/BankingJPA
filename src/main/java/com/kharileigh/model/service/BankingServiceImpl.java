@@ -14,38 +14,36 @@ import org.springframework.stereotype.Service;
 public class BankingServiceImpl implements BankingService {
 
     
+    // Automatically configures DAO dependency to be used by Service
     @Autowired
     private BankingDao dao;
-    
-    @Override
-    public Customer searchCustomerById(int id) {
-        
-        return dao.findById(id).orElse(null);
-    }
-    
-    
-    @Override
-    public boolean login(String name, String password) {
-    
-        Customer customerLogin = dao.findByAccountNameAndPassword(name, password);
-        
-        if(customerLogin != null) {
-            
-            return true;
-            
-        } else {
-        
-            return false;
-        }
-    }
-    
-    
 
     @Override
-    public boolean updateBalance(int id, double deposit) {
+    public Customer login(int customerId, String password) {
         
-        return dao.updateBalance(id, deposit) > 0;
+        // TRY - to get Customer by fetching their ID & Password
+        try {
+            
+            Customer activeCustomer = dao.findByCustomerIdAndPassword(customerId, password);
+            return activeCustomer;
+            
+        } catch(Exception exception) {
+            
+            return null;
+        }
     }
+
+    
+    @Override
+    public Customer transferFunds(int senderId, int recipientId, double deposit) {
+        
+        // GET - get senders ID
+        if
+        
+    }
+    
+    
+    
     
     
 }

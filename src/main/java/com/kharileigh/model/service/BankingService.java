@@ -10,10 +10,9 @@ import com.kharileigh.entity.Customer;
 
 public interface BankingService {
     
-    Customer searchCustomerById(int id);
+    // CUSTOMER OBJECT - to get validate login credentials & update full record when data is manipulated
+    Customer login(int customerId, String password);
     
-    boolean login(String name, String password);
-    
-    boolean updateBalance(int id, double deposit);
+    Customer transferFunds(int senderId, int recipientId, double deposit);
     
 }

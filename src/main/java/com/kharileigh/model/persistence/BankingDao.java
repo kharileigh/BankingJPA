@@ -6,22 +6,17 @@
 package com.kharileigh.model.persistence;
 
 import com.kharileigh.entity.Customer;
-import javax.transaction.Transactional;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+// GET DATA FROM DATABASE
 @Repository("dao")
 public interface BankingDao extends JpaRepository<Customer, Integer> {
     
+    // Gets FULL Object / Record from Database, Use PARTIAL DATA ELSWHERE 
+    // JPQL Method - use properties with function
+    public Customer findByCustomerIdAndPassword(int id, String password);
    
-    public Customer findByAccountNameAndPassword(String name, String password);
-    
-    @Modifying
-    @Transactional
-    @Query("UPDATE Customer SET BALANCE = BALANCE + :update WHERE ACCOUNT_ID = :id")
-    int updateBalance(@Param("id") int id, @Param("update") double deposit);
 }
