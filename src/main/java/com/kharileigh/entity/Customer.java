@@ -46,4 +46,5 @@ public class Customer {
     @Column(name = "BALANCE")
     private double balance;
     
+ 
 }

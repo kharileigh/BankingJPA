@@ -22,6 +22,24 @@ public class BankingServiceImpl implements BankingService {
         
         return dao.findById(id).orElse(null);
     }
+    
+    
+    @Override
+    public boolean login(String name, String password) {
+    
+        Customer customerLogin = dao.findByAccountNameAndPassword(name, password);
+        
+        if(customerLogin != null) {
+            
+            return true;
+            
+        } else {
+        
+            return false;
+        }
+    }
+    
+    
 
     @Override
     public boolean updateBalance(int id, double deposit) {
