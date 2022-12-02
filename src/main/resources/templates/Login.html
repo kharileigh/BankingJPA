@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th=' "https://thymeleaf.org'>
+<html>
     <head>
         <title>supply a title</title>
         <meta charset="UTF-8">
@@ -10,15 +10,13 @@
     <body>
         
         <h1>Banking Services</h1>
-        <hr>
-        <h3 th:text="'Welcome ' + ${session.customer.name} + ' !'"></h3>
-        <hr>
         
-        <form action="./searchByAccountId">
+        <form action="./login">
             
-            Enter Account ID <input type="text" name="customerId"><br><br>
+            Enter Account Name <input type="text" name="name"><br><br>
+            Enter Account Password <input type="text" name="password"><br><br>
             
-            <input type="submit" value="Search Account">
+            <input type="submit" value="Login">
             
         </form>
         <br><br>
@@ -27,3 +25,4 @@
     </body>
     
 </html>
+

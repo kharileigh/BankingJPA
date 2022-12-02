@@ -7,8 +7,10 @@ package com.kharileigh.controller;
 
 import com.kharileigh.entity.Customer;
 import com.kharileigh.model.service.BankingService;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,12 +24,41 @@ public class BankingController {
     private BankingService service;
     
     
+    @RequestMapping("/")
+    public ModelAndView loginPageController() {
+    
+        return new ModelAndView("Login");
+    }
+    
+    @RequestMapping("/login")
+    public ModelAndView loginController(@ModelAttribute("customer") Customer customer, HttpSession session) {
+    
+        ModelAndView modelAndView = new ModelAndView();
+        
+        if(service.login(customer.getName(), customer.getPassword())) {
+        
+            modelAndView.addObject("customer", customer);
+            session.setAttribute("customer", customer);
+            modelAndView.setViewName("index");
+            
+        } else {
+        
+            modelAndView.addObject("message", "Incorrect Account Details, please try again");
+            modelAndView.addObject("customer", new Customer());
+            modelAndView.setViewName("Login");
+        }
+        
+        return modelAndView;
+    }
+    
+    
     //==================================================
     @RequestMapping("/menu")
     public ModelAndView menuPageController() {
     
         return new ModelAndView("index");
     }
+    
     
     //====================== SEARCH ACCOUNT BY ID ============================
     @RequestMapping("/searchByAccountIdPage")
