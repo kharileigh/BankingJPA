@@ -19,7 +19,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "Customer")
+@Table(name = "Account")
 public class Customer {
     
     @Id
@@ -28,7 +28,7 @@ public class Customer {
     
     
     @Column(name = "NAME")
-    private String name;
+    private String customerName;
     
     
     @Column(name = "PASSWORD")
