@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 
-<html>
-    <head>
-        <title>supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    
-    <body>
-        
-        <h1>Banking Services</h1>
-        
-        <form action="./login" method="post">
-            
-            Enter Account Name <input type="text" name="name"><br><br>
-            Enter Account Password <input type="text" name="password"><br><br>
-            
-            <input type="submit" value="Login">
-            
-        </form>
-        <br><br>
-        
-        <a href="./menu">Return To Menu</a>
-    </body>
-    
+<html xmlns:th="https:llthymeleaf.org">
+<head>
+    <title>supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <h1>Banking Services</h1>
+
+    <form action="./login" method="post">
+
+        Enter Account Id : <input type="text" name="customerId"><br><br>
+        Enter Account Password : <input type="password" name="pwd"><br><br>
+
+        <input type="submit" value="Login">
+
+        <!-- MESSAGE SHOWN TO USER IF LOGIN FALSE -->
+        <h2 th:text = "${message}"></h2>
+
+    </form>
+
+</body>
+
 </html>
 

@@ -38,7 +38,34 @@ public class BankingServiceImpl implements BankingService {
     public Customer transferFunds(int senderId, int recipientId, double deposit) {
         
         // GET - get senders ID
-        if
+        Customer sender = dao.findById(senderId).get();
+        
+        // check if customer has enough money -> less than deposit amount, return null
+        if (sender.getBalance() < deposit) {
+            
+            return null;
+        
+        // set senders balance decrementing deposit, set recipient's balance as incrementing deposit
+        } else {
+        
+            Customer recipient = dao.findById(recipientId).orElse(null);
+            
+            // if recipient exist, update both balances
+            if(recipient != null) {
+                
+                recipient.setBalance(recipient.getBalance() + deposit);
+                sender.setBalance(sender.getBalance() - deposit);
+                dao.save(recipient);
+                dao.save(sender);
+                
+                // return sender because currently logged in customer using the session
+                return sender;
+                
+            } else {
+            
+                return null;
+            }
+        }
         
     }
     

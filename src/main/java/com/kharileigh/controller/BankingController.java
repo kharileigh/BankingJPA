@@ -10,7 +10,6 @@ import com.kharileigh.model.service.BankingService;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,60 +29,33 @@ public class BankingController {
         return new ModelAndView("index");
     }
     
+    
+    // ModelAttribute - used when taking the full object / record from database
+    // RequestParam - used when taking partial data from object / record from database
     @RequestMapping("/login")
-    public ModelAndView loginController(@ModelAttribute("customer") Customer customer, HttpSession session) {
+    public ModelAndView loginController(@RequestParam("customerId") int id, @RequestParam("pwd") String password, HttpSession session) {
     
         ModelAndView modelAndView = new ModelAndView();
+        Customer sender = service.login(id, password);
         
-        if(service.login(customer.getCustomerId(), customer.getPassword())) {
+        if(sender != null) {
         
-            modelAndView.addObject("customer", customer);
-            session.setAttribute("customer", customer);
-            modelAndView.setViewName("index");
+            // setting logged in customer object to the session
+            session.setAttribute("sender", sender);
+            modelAndView.setViewName("TransactionPage");
             
         } else {
         
-            modelAndView.addObject("message", "Incorrect Account Details, please try again");
-            modelAndView.addObject("customer", new Customer());
-            modelAndView.setViewName("Login");
+            // if unsuccessful login, prompt user to try again
+            modelAndView.addObject("message", "Login failed, Please try again");
+            modelAndView.setViewName("index");
         }
         
         return modelAndView;
     }
     
     
-    //==================================================
-    @RequestMapping("/menu")
-    public ModelAndView menuPageController() {
     
-        return new ModelAndView("index");
-    }
-    
-    
-    //====================== SEARCH ACCOUNT BY ID ============================
-    @RequestMapping("/searchByAccountIdPage")
-    public ModelAndView searchByAccountIdController() {
-    
-        return new ModelAndView("SearchAccountById");
-    }
-    
-    @RequestMapping("/searchByAccountId")
-    public ModelAndView searchByAccountId(@RequestParam("customerId") int id) {
-        
-        ModelAndView modelAndView = new ModelAndView();
-        
-        Customer customer = service.searchCustomerById(id);
-        if(customer != null) {
-        
-            modelAndView.addObject("customer", customer);
-            modelAndView.setViewName("ShowAccount");
-        
-        } else {
-        
-            modelAndView.addObject("message", "Account ID : " + id + "does not exist in our system.");
-            modelAndView.setViewName("Output");
-        }
-        
-        return modelAndView;
-    }
+    //====================== TRANSFER FUNDS FROM ONE ACCOUNT TO ANOTHER ============================
+  
 }
